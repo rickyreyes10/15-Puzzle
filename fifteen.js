@@ -284,8 +284,82 @@ class fifteenPuzzle { //class for the fifteen puzzle game
         return document.getElementById(`square_${row}_${col}`); //get the tile DOM element at the specific row and column
     }
 
+    //helper method to check if position is adjacent to empty space
+    //move validation
+    isAdjacent(row, col) {
+        return (
+            (Math.abs(row - this.emptyPos.row) === 1 && col === this.emptyPos.col) || //if the row difference is 1 and the column is the same as the empty space, return true this means the tile is adjacent to the empty space horizontally
+            (Math.abs(col - this.emptyPos.col) === 1 && row === this.emptyPos.row) //if the column difference is 1 and the row is the same as the empty space, return true this means the tile is adjacent to the empty space vertically
+        );
+    }
 
+    //helper method to shuffle the board
+    shuffle() {
+        //number of random moves to perform to shuffle the board
+        const moves = 200;
 
+        //disable shuffle button during animation
+        this.shuffleButton.disabled = true;
+
+        // Reset stats for new game
+        this.resetStats();
+
+        //perform moves with slight delay to show animation
+        let shuffleCount = 0;
+        const shuffleInterval = setInterval(() => { //set interval to make random moves with a slight delay to show animation
+            this.makeRandomMove(true); //make a random move
+            shuffleCount++;
+
+            //stop after desired number of moves
+            if (shuffleCount >= moves) { //if the move count is greater than or equal to the desired number of moves, stop the interval
+                clearInterval(shuffleInterval); //clear the interval
+                this.shuffleButton.disabled = false; //enable the shuffle button
+            }
+        }, 5); //small delay between moves
+    }
+
+    //helper method to make a random move
+    makeRandomMove(isShuffling = false) { //this method is used to make a random move on the board
+        //get all possible moves
+        const validMoves = this.getValidMoves(); //get all the valid moves
+
+        //select random move from valid moves
+        if (validMoves.length > 0) { //if there are valid moves, select a random move
+            const randomIndex = Math.floor(Math.random() * validMoves.length); //select a random index from the valid moves
+            const { row, col } = validMoves[randomIndex]; //get the row and column of the random move
+            this.moveTile(row, col, isShuffling); //move the tile to the random position
+        }
+    }
+
+    //helper method to get all valid moves for the empty space
+    //this method is used to get all the valid moves for the empty space so that we can make a random move from the valid moves
+    //constraints: the move must be within the board boundaries and the move must be adjacent to the empty space
+    getValidMoves() {
+        const validMoves = []; //initialize valid moves array to store the valid moves
+
+        //check all four possible directions
+        const directions = [ //array of all the possible directions as objects with row and col properties
+            { row: -1, col: 0 },  // up.. negative row value means moving up by 1 row since we can only move by 1 tile at a time 
+            { row: 1, col: 0 },   // down.. positive row value means moving down by 1 row since we can only move by 1 tile at a time        
+            { row: 0, col: -1 },  // left.. negative column value means moving left by 1 column since we can only move by 1 tile at a time
+            { row: 0, col: 1 }    // right.. positive column value means moving right by 1 column since we can only move by 1 tile at a time
+        ];
+
+        //this loop checks all four possible directions to see if the move is valid
+        for (const dir of directions) { //loop through all the possible directions
+
+            //these are the new positions if the empty space moves in the direction of the current direction... only will be valid if the new position is within the board boundaries
+            const newRow = this.emptyPos.row + dir.row; //this is the new row position if the empty space moves in the direction of the current direction
+            const newCol = this.emptyPos.col + dir.col; //this is the new column position if the empty space moves in the direction of the current direction
+
+            //check if move is within board boundaries
+            if (newRow >= 0 && newRow < this.BOARD_SIZE && newCol >= 0 && newCol < this.BOARD_SIZE) { //if the new position is within the board boundaries, add it to the valid moves array
+                validMoves.push({ row: newRow, col: newCol }); //add the new position to the valid moves array
+            }
+        }
+
+        return validMoves;
+    }
 
     //helper method to reset the gameboard/show correct order
     resetGame() {
