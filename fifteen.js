@@ -9,6 +9,13 @@ class fifteenPuzzle { //class for the fifteen puzzle game
         this.TILE_COUNT = 15;
         this.emptyPos = { row: 3, col: 3 }; //bottom right initially
 
+        //properties to keep track of the game state
+        this.moveCount = 0;
+        this.startTime = null;
+        this.timerInterval = null;
+        this.bestTime = localStorage.getItem('bestTime') || null;
+        this.bestMoves = localStorage.getItem('bestMoves') || null;
+        this.isMusicPlaying = false;
 
         //bind event handlers where bind is used to ensure that the methods have the correct context when they are called
         this.handleTileClick = this.handleTileClick.bind(this); //bind the handleTileClick method to the this object so it can be used in the event listener
@@ -31,11 +38,45 @@ class fifteenPuzzle { //class for the fifteen puzzle game
         this.shuffleButton.addEventListener('click', () => this.shuffle()); //event listener for when the shuffle button is clicked
 
 
+        //DOM elements to display the move count, timer, best time, and best moves
+        this.moveCounter = document.getElementById('moveCounter');
+        this.timerDisplay = document.getElementById('timer');
+        this.bestTimeDisplay = document.getElementById('bestTime');
+        this.bestMovesDisplay = document.getElementById('bestMoves');
 
 
+        //DOM elements to control the music
+        this.music = document.getElementById('backgroundMusic');
+        this.toggleMusicButton = document.getElementById('toggleMusic');
+        this.toggleMusicButton.addEventListener('click', () => this.toggleMusic());
+
+
+
+        this.updateBestScores(); //update the best scores
         this.createBoard(); //create the initial board
+        this.resetStats(); //reset the stats
     }
 
+    //helper method to reset the stats
+    resetStats() {
+        // Reset move counter
+        this.moveCount = 0;
+        this.moveCounter.textContent = '0';
+
+        // Reset and start timer
+        clearInterval(this.timerInterval);
+        this.startTime = Date.now();
+        this.timerInterval = setInterval(() => this.updateTimer(), 1000);
+    }
+
+    //helper method to update the timer
+    updateTimer() {
+        const seconds = Math.floor((Date.now() - this.startTime) / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        this.timerDisplay.textContent =
+            `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    }
 
     //helper method to create the initial board
     createBoard() {
@@ -83,6 +124,36 @@ class fifteenPuzzle { //class for the fifteen puzzle game
 
 
 
+
+    //helper method to toggle the music on and off
+    toggleMusic() { //this method is used to toggle the music on and off
+        if (this.isMusicPlaying) { //if the music is playing, pause it
+            this.music.pause(); //pause the music
+            this.toggleMusicButton.textContent = '🔈'; //change the text content of the toggle music button to the mute icon
+        } else { //if the music is not playing, play it
+            this.music.play(); //play the music
+            this.toggleMusicButton.textContent = '🔊'; //change the text content of the toggle music button to the unmute icon
+        }
+        this.isMusicPlaying = !this.isMusicPlaying; //toggle the music playing state
+    }
+
+
+
+
+
+
+
+    //helper method to reset the gameboard/show correct order
+    resetGame() {
+        // Clear the board
+        this.gameBoard.innerHTML = '';
+
+        // Reset empty position
+        this.emptyPos = { row: 3, col: 3 };
+
+        // Recreate board with animations
+        this.createBoard();
+    }
 
 }
 
