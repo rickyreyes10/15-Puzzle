@@ -50,10 +50,10 @@ class fifteenPuzzle { //class for the fifteen puzzle game
         this.music = document.getElementById('backgroundMusic');
         this.toggleMusicButton = document.getElementById('toggleMusic');
         this.volumeSlider = document.getElementById('volumeSlider');
-        
+
         // Set initial volume
         this.music.volume = this.defaultVolume;
-        
+
         // Add event listeners for audio controls
         this.toggleMusicButton.addEventListener('click', () => this.toggleMusic());
         this.volumeSlider.addEventListener('input', () => {
@@ -223,7 +223,7 @@ class fifteenPuzzle { //class for the fifteen puzzle game
 
         const overlay = document.createElement('div');
         overlay.className = 'win-overlay';
-        
+
         const message = document.createElement('div');
         message.className = 'win-message';
         message.innerHTML = `
@@ -231,9 +231,9 @@ class fifteenPuzzle { //class for the fifteen puzzle game
             <p>Puzzle Completed</p>
             <p>Moves: ${this.moveCount}</p>
             <p>Time: ${Math.floor(finalTime / 60)}:${(finalTime % 60).toString().padStart(2, '0')}</p>
-            <button onclick="location.reload()">Play Again</button>
+            <button onclick="location.reload()">Close</button>
         `;
-        
+
         overlay.appendChild(message);
         document.body.appendChild(overlay);
     }
