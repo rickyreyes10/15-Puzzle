@@ -123,7 +123,70 @@ class fifteenPuzzle { //class for the fifteen puzzle game
     }
 
 
+    //helper method to update background position when tiles move
+    updateTileBackground(tile, row, col) {
+        tile.style.backgroundPosition = `${-col * 100}px ${-row * 100}px`; //set the background position of the tile which is the negative of the column number times 100 pixels and the negative of the row number times 100 pixels because we're moving the background "behind" the window    
+    }
 
+    //event handler for when a tile is clicked
+    handleTileClick(event) {
+        const tile = event.target; //get the tile DOM element that was clicked
+        const [row, col] = tile.id.split('_').slice(1).map(Number); //extract row and col from tile ID and convert to numbers to store to variables row and col
+
+        //check if clicked tile is adjacent to empty space so it can move
+        if (this.isAdjacent(row, col)) {
+            this.moveTile(row, col); //move tile to empty space
+        }
+    }
+
+    //helper method to move tile to empty space
+    moveTile(row, col, isShuffling = false) {
+        //get the tile DOM element
+        const tile = this.getTile(row, col);
+        if (!tile) { //if tile doesn't exist, return
+            return;
+        }
+
+        //store old position for background update
+        const oldRow = row; //store the old row position of the tile that was moved
+        const oldCol = col; //store the old column position of the tile that was moved
+
+        //update tile position
+        tile.style.left = (this.emptyPos.col * 100) + 'px'; //set the left position of the tile which is the column number times 100 pixels because each tile is 100px wide
+        tile.style.top = (this.emptyPos.row * 100) + 'px'; //set the top position of the tile which is the row number times 100 pixels because each tile is 100px high
+
+        //update tile ID to reflect new position
+        tile.id = `square_${this.emptyPos.row}_${this.emptyPos.col}`; //update the ID of the tile to the new position which is the row number and the column number of the empty space
+
+        //update background position for new location
+        this.updateTileBackground(tile, this.emptyPos.row, this.emptyPos.col); //update the background position of the tile to the new position
+
+        //update empty space position
+        this.emptyPos = { row: oldRow, col: oldCol }; //update the empty space position to the old position of the tile that was moved
+
+        //update movable pieces styling
+        this.updateMovableStates(); //update the styling of the movable pieces
+
+        // Only increment move counter if this is a player move (not shuffling)
+        if (!isShuffling) {
+            this.moveCount++;
+            this.moveCounter.textContent = this.moveCount;
+
+            // Check for win
+            if (this.checkWin()) {
+                this.handleWin();
+            }
+        }
+    }
+
+
+
+    updateBestScores() { //this method is used to update the best scores by displaying the best time and best moves
+        this.bestTimeDisplay.textContent = this.bestTime ? //if the best time exists, display it in the format of minutes and seconds, otherwise display '-'
+            `${Math.floor(this.bestTime / 60)}:${(this.bestTime % 60).toString().padStart(2, '0')}` :
+            '-';
+        this.bestMovesDisplay.textContent = this.bestMoves || '-'; //if the best moves exists, display it, otherwise display '-'
+    }
 
     //helper method to toggle the music on and off
     toggleMusic() { //this method is used to toggle the music on and off
@@ -138,6 +201,47 @@ class fifteenPuzzle { //class for the fifteen puzzle game
     }
 
 
+    //helper method to update movable piece styling when tiles move after a tile is clicked to move into the empty space
+    updateMovableStates() { //this is necessary b/c we need to remove the moveable piece class from all tiles to start fresh so that we can add the moveable piece class to the new adjacent tiles after the tile is moved into the empty space
+        //remove movable piece class from all tiles
+        const tiles = document.querySelectorAll('.tile'); //get all the tiles DOM elements
+        tiles.forEach(tile => { //loop through all the tiles
+            tile.classList.remove('moveablepiece'); //remove the movable piece class from all tiles
+        });
+
+        //add moveablepiece class to adjacent tiles
+        for (let row = 0; row < this.BOARD_SIZE; row++) { //loop through the rows of the board
+            for (let col = 0; col < this.BOARD_SIZE; col++) { //loop through the columns of the board
+                const tile = this.getTile(row, col); //get the tile DOM element at the current row and column
+                if (tile && this.isAdjacent(row, col)) { //if the tile exists and is adjacent to the empty space, add the movable piece class to the tile
+                    tile.classList.add('moveablepiece'); //add the movable piece class to the tile
+                }
+            }
+        }
+    }
+
+    //event handler for mouseover when hovering over a tile that can be moved
+    handleMouseOver(event) {
+        const tile = event.target; //get the tile DOM element that was hovered over
+        const [row, col] = tile.id.split('_').slice(1).map(Number); //extract row and col from tile ID and convert to numbers to store to variables row and col
+
+        if (this.isAdjacent(row, col)) { //if the tile is adjacent to the empty space, add the movable piece class to the tile
+            tile.classList.add('moveablepiece'); //add the movable piece class to the tile
+        }
+    }
+
+    //helper method to remove movable piece class when mouse leaves a tile
+    handleMouseOut(event) {
+        const tile = event.target; //get the tile DOM element that was hovered over
+        tile.classList.remove('moveablepiece'); //remove the movable piece class from the tile
+    }
+
+
+    //helper method to get tile at specific position
+    //tile access
+    getTile(row, col) {
+        return document.getElementById(`square_${row}_${col}`); //get the tile DOM element at the specific row and column
+    }
 
 
 

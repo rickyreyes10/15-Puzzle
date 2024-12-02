@@ -97,3 +97,49 @@ body {
     /* 0.1s delay for each tile .. calc() is used to calculate the delay based on the tile index .. var*/
 
 }
+
+.tile:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Moveable piece styling */
+.moveablepiece {
+    border-color: red;
+    color: #f4f5f8;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.moveablepiece:hover {
+    /*shadow for movable pieces */
+    box-shadow: 0 0 10px black;
+    text-shadow: 2px 2px 2px black;
+    /* Slight scale effect */
+    transform: scale(1.02);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+/*non-moveable tiles hover state */
+.tile:not(.moveablepiece):hover {
+    cursor: not-allowed;
+}
+
+/*we use animation delay (in the tile class) to make the tiles appear in order from the top of the board */
+/*this animation alone would just make the tiles appear from the top of the board with a scaling effect all at once*/
+/*tile initial state intro animation*/
+@keyframes tileAppear {
+
+    /*animation that makes the tiles appear from the top of the board with a scaling effect */
+    0% {
+        /*initial state which is the tile being hidden at the top of the board */
+        opacity: 0;
+        transform: translateY(-50px) scale(0.8);
+    }
+
+    100% {
+        /*final state which is the tile being fully visible at its original position */
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
