@@ -3,18 +3,27 @@ body {
     text-align: center;
     color: black;
     background-image: url('images/background.jpg');
-    background-size: cover; /* Ensures the image covers the entire viewport */
-    background-repeat: no-repeat; /* Prevents the image from repeating */
-    background-position: center; /* Centers the image */
-    height: 100%; /* Sets the height to the full viewport height */
-    width: 100vw; /* Sets the width to the full viewport width */
+    background-size: cover;
+    /* Ensures the image covers the entire viewport */
+    background-repeat: no-repeat;
+    /* Prevents the image from repeating */
+    background-position: center;
+    /* Centers the image */
+    height: 100%;
+    /* Sets the height to the full viewport height */
+    width: 100vw;
+    /* Sets the width to the full viewport width */
 }
 
-h1{
+h1 {
     text-align: center;
-    background: linear-gradient(135deg, #4a148c, #6a1b9a);
+    background: linear-gradient(135deg, #3a0180, #bd80e1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 2px rgba(188, 185, 185, 0.8);
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 
 #puzzleContainer {
@@ -27,12 +36,18 @@ h1{
     height: 400px;
     position: relative;
     border: 2px solid black;
+    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
 }
 
 #gameStats {
+    background: linear-gradient(135deg, #831bb0, #9b59b6);
     margin: 20px auto;
+    padding: 10px;
     font-size: 18px;
+    color: white;
     font-weight: bold;
+    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
+    border-radius: 8px;
 }
 
 #gameStats div {
@@ -52,7 +67,9 @@ h1{
     cursor: pointer;
 }
 
-#shuffleButton, #resetButton, #toggleMusic {
+#shuffleButton,
+#resetButton,
+#toggleMusic {
     margin: 20px;
     padding: 10px 20px;
     font-size: 16px;
@@ -65,7 +82,9 @@ h1{
     box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
 }
 
-#shuffleButton:hover, #resetButton:hover, #toggleMusic:hover {
+#shuffleButton:hover,
+#resetButton:hover,
+#toggleMusic:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(44, 62, 80, 0.4);
     background: linear-gradient(135deg, #4a148c, #6a1b9a);
@@ -228,9 +247,17 @@ h1{
     animation: slideIn 0.5s ease-out forwards;
 }
 
-.win-message p:nth-child(2) { animation-delay: 0.2s; }
-.win-message p:nth-child(3) { animation-delay: 0.4s; }
-.win-message p:nth-child(4) { animation-delay: 0.6s; }
+.win-message p:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.win-message p:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.win-message p:nth-child(4) {
+    animation-delay: 0.6s;
+}
 
 .win-message button {
     margin-top: 2rem;
@@ -261,6 +288,7 @@ h1{
         transform: translateY(-50px);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 1;
@@ -272,6 +300,7 @@ h1{
         transform: translateX(-30px);
         opacity: 0;
     }
+
     to {
         transform: translateX(0);
         opacity: 1;
@@ -283,12 +312,15 @@ h1{
         transform: scale(0.3);
         opacity: 0;
     }
+
     70% {
         transform: scale(1.1);
     }
+
     85% {
         transform: scale(0.95);
     }
+
     100% {
         transform: scale(1);
         opacity: 1;
@@ -296,8 +328,13 @@ h1{
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 #volumeSlider {
@@ -327,11 +364,17 @@ h1{
     border-radius: 50%;
     cursor: pointer;
 }
+
 #backgroundSelector {
+    background: linear-gradient(135deg, #8e44ad, #9b59b6);
     margin: 10px auto;
+    padding: 5px;
     text-align: center;
+    color: white;
     font-size: 16px;
     font-weight: bold;
+    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
+    border-radius: 8px;
 }
 
 #bgDropdown {
