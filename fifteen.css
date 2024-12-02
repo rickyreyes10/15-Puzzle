@@ -16,6 +16,33 @@ body {
     border: 2px solid black;
 }
 
+#gameStats {
+    margin: 20px auto;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#gameStats div {
+    margin: 5px;
+}
+
+#audioControls {
+    margin: 10px;
+}
+
+#toggleMusic {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#shuffleButton {
+    margin: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+
+}
+
 #validators {
     text-align: right;
 }
