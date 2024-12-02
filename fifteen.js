@@ -197,29 +197,36 @@ class fifteenPuzzle { //class for the fifteen puzzle game
     }
 
     //helper method to handle the win
-    handleWin() { //this method is used to handle the win by stopping the timer, calculating the final time, updating the best scores, and showing the win message
-        // Stop timer
+    handleWin() {
         clearInterval(this.timerInterval);
+        const finalTime = Math.floor((Date.now() - this.startTime) / 1000);
 
-        // Calculate final time
-        const finalTime = Math.floor((Date.now() - this.startTime) / 1000); //calculate the final time by subtracting the start time from the current time and dividing by 1000 to get seconds
-
-        // Update best scores
-        if (!this.bestTime || finalTime < parseInt(this.bestTime)) { //if the best time doesn't exist or the final time is less than the best time, update the best time and store it in local storage
+        if (!this.bestTime || finalTime < parseInt(this.bestTime)) {
             this.bestTime = finalTime;
             localStorage.setItem('bestTime', finalTime);
         }
-        if (!this.bestMoves || this.moveCount < parseInt(this.bestMoves)) { //if the best moves doesn't exist or the move count is less than the best moves, update the best moves and store it in local storage
+        if (!this.bestMoves || this.moveCount < parseInt(this.bestMoves)) {
             this.bestMoves = this.moveCount;
             localStorage.setItem('bestMoves', this.moveCount);
         }
 
-        this.updateBestScores(); //update the best scores
+        this.updateBestScores();
 
-        // Show win message
-        setTimeout(() => {
-            alert(`Congratulations! You solved the puzzle in ${this.moveCount} moves and ${finalTime} seconds!`);
-        }, 300);
+        const overlay = document.createElement('div');
+        overlay.className = 'win-overlay';
+        
+        const message = document.createElement('div');
+        message.className = 'win-message';
+        message.innerHTML = `
+            <h2>Congratulations!</h2>
+            <p>Puzzle Completed</p>
+            <p>Moves: ${this.moveCount}</p>
+            <p>Time: ${Math.floor(finalTime / 60)}:${(finalTime % 60).toString().padStart(2, '0')}</p>
+            <button onclick="location.reload()">Play Again</button>
+        `;
+        
+        overlay.appendChild(message);
+        document.body.appendChild(overlay);
     }
 
     updateBestScores() { //this method is used to update the best scores by displaying the best time and best moves
