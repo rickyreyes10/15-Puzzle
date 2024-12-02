@@ -1,7 +1,20 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #e7ece7;
+    color: black;
+    background-image: url('images/background.jpg');
+    background-size: cover; /* Ensures the image covers the entire viewport */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image */
+    height: 100%; /* Sets the height to the full viewport height */
+    width: 100vw; /* Sets the width to the full viewport width */
+}
+
+h1{
+    text-align: center;
+    background: linear-gradient(135deg, #4a148c, #6a1b9a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 #puzzleContainer {
@@ -44,7 +57,7 @@ body {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    background: linear-gradient(135deg, #2c3e50, #34495e);
+    background: linear-gradient(135deg, #8e44ad, #9b59b6);
     color: white;
     border: none;
     border-radius: 8px;
@@ -55,7 +68,7 @@ body {
 #shuffleButton:hover, #resetButton:hover, #toggleMusic:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(44, 62, 80, 0.4);
-    background: linear-gradient(135deg, #34495e, #2c3e50);
+    background: linear-gradient(135deg, #4a148c, #6a1b9a);
 }
 
 #shuffleButton:disabled {
@@ -66,7 +79,7 @@ body {
 }
 
 #validators {
-    text-align: right;
+    text-align: center;
 }
 
 #validators img {
@@ -183,7 +196,7 @@ body {
 }
 
 .win-message {
-    background: linear-gradient(135deg, #fff, #f0f0f0);
+    background-image: url('images/background.jpg');
     padding: 3rem;
     border-radius: 15px;
     text-align: center;
@@ -194,7 +207,9 @@ body {
 }
 
 .win-message h2 {
-    color: #2c3e50;
+    background: linear-gradient(135deg, #4a148c, #6a1b9a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 1.5rem;
     font-size: 2.2rem;
     text-transform: uppercase;
@@ -204,7 +219,9 @@ body {
 }
 
 .win-message p {
-    color: #34495e;
+    background: linear-gradient(135deg, #4a148c, #6a1b9a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin: 0.8rem 0;
     font-size: 1.3rem;
     opacity: 0;
@@ -219,7 +236,7 @@ body {
     margin-top: 2rem;
     padding: 1rem 2rem;
     font-size: 1.2rem;
-    background: linear-gradient(135deg, #2c3e50, #34495e);
+    background: linear-gradient(135deg, #8e44ad, #9b59b6);
     color: white;
     border: none;
     border-radius: 8px;
@@ -236,7 +253,7 @@ body {
 .win-message button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(44, 62, 80, 0.4);
-    background: linear-gradient(135deg, #34495e, #2c3e50);
+    background: linear-gradient(135deg, #4a148c, #6a1b9a);
 }
 
 @keyframes slideDown {
@@ -330,5 +347,5 @@ body {
 
 #bgDropdown:hover {
     border-color: #34495e;
-    background-color: #e7ece7;
+    background-image: url('images/background.jpg');
 }
