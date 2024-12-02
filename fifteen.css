@@ -100,8 +100,7 @@ body {
     /*smooth transitions for animations */
     transition: all 0.3s ease;
 
-    /*background properties */
-    background-image: url('images/img4.png');
+
     /* Full puzzle size */
     background-size: 400px 400px;
     overflow: hidden;

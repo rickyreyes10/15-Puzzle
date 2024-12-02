@@ -9,6 +9,11 @@ class fifteenPuzzle { //class for the fifteen puzzle game
         this.TILE_COUNT = 15;
         this.emptyPos = { row: 3, col: 3 }; //bottom right initially
 
+        // Add a property to track current background
+        this.currentBackground = 'images/img4.png';
+        // Bind background selection method
+        this.handleBackgroundChange = this.handleBackgroundChange.bind(this);
+
         //properties to keep track of the game state
         this.moveCount = 0;
         this.startTime = null;
@@ -38,6 +43,14 @@ class fifteenPuzzle { //class for the fifteen puzzle game
         //set up event listeners
         this.shuffleButton.addEventListener('click', () => this.shuffle()); //event listener for when the shuffle button is clicked
 
+        // Get background dropdown element
+        this.backgroundDropdown = document.getElementById('bgDropdown');
+
+        // Add event listener for background selection
+        this.backgroundDropdown.addEventListener('change', this.handleBackgroundChange);
+
+        // Set initial random background
+        this.setRandomBackground();
 
         //DOM elements to display the move count, timer, best time, and best moves
         this.moveCounter = document.getElementById('moveCounter');
@@ -66,6 +79,36 @@ class fifteenPuzzle { //class for the fifteen puzzle game
         this.resetStats(); //reset the stats
     }
 
+    // New method to set a random background
+    setRandomBackground() {
+        const backgrounds = [
+            'images/img1.png',
+            'images/img2.png',
+            'images/img3.png',
+            'images/img4.png'
+        ];
+        const randomIndex = Math.floor(Math.random() * backgrounds.length);
+        this.currentBackground = backgrounds[randomIndex];
+        this.updateBackgroundOnAllTiles();
+
+        // Update dropdown to match selected background
+        this.backgroundDropdown.value = this.currentBackground;
+    }
+
+    // Method to handle background change
+    handleBackgroundChange(event) {
+        this.currentBackground = event.target.value;
+        this.updateBackgroundOnAllTiles();
+    }
+
+    // Method to update background on all tiles
+    updateBackgroundOnAllTiles() {
+        const tiles = document.querySelectorAll('.tile');
+        tiles.forEach(tile => {
+            tile.style.backgroundImage = `url(${this.currentBackground})`;
+        });
+    }
+
     //helper method to reset the stats
     resetStats() {
         // Reset move counter
@@ -87,7 +130,7 @@ class fifteenPuzzle { //class for the fifteen puzzle game
             `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
 
-    //helper method to create the initial board
+    // Override createBoard method to use current background
     createBoard() {
         //clear any existing tiles
         this.gameBoard.innerHTML = ''; //clear the game board
@@ -109,8 +152,11 @@ class fifteenPuzzle { //class for the fifteen puzzle game
                 tile.id = `square_${row}_${col}`; //set the ID for the tile which would be used for identification
                 tile.textContent = number; //set the text content for the tile which would be the number
 
+                // Set background image
+                tile.style.backgroundImage = `url(${this.currentBackground})`; //set the background image to the current selected background
+
                 // Add animation delay based on tile number
-                tile.style.setProperty('--tile-index', number); //set the tile index property for the tile which would be used for the animation delay.. --tile-index is a custom property that we're setting for the tile and we're setting it to the number of the tile
+                tile.style.setProperty('--tile-index', number); //set the tile index property for the tile which would be used for the animation delay
 
                 //position tile
                 tile.style.left = (col * 100) + 'px'; //set the left position of the tile which is the column number times 100 pixels because each tile is 100px wide
@@ -131,7 +177,17 @@ class fifteenPuzzle { //class for the fifteen puzzle game
         }
     }
 
+    // Modify resetGame method to preserve background
+    resetGame() {
+        // Clear the board
+        this.gameBoard.innerHTML = '';
 
+        // Reset empty position
+        this.emptyPos = { row: 3, col: 3 };
+
+        // Recreate board with current background
+        this.createBoard();
+    }
     //helper method to update background position when tiles move
     updateTileBackground(tile, row, col) {
         tile.style.backgroundPosition = `${-col * 100}px ${-row * 100}px`; //set the background position of the tile which is the negative of the column number times 100 pixels and the negative of the row number times 100 pixels because we're moving the background "behind" the window
@@ -377,17 +433,6 @@ class fifteenPuzzle { //class for the fifteen puzzle game
         return validMoves;
     }
 
-    //helper method to reset the gameboard/show correct order
-    resetGame() {
-        // Clear the board
-        this.gameBoard.innerHTML = '';
-
-        // Reset empty position
-        this.emptyPos = { row: 3, col: 3 };
-
-        // Recreate board with animations
-        this.createBoard();
-    }
 
 }
 
