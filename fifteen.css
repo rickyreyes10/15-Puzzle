@@ -28,6 +28,10 @@ body {
 
 #audioControls {
     margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 #toggleMusic {
@@ -35,12 +39,30 @@ body {
     cursor: pointer;
 }
 
-#shuffleButton {
+#shuffleButton, #resetButton, #toggleMusic {
     margin: 20px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
+}
 
+#shuffleButton:hover, #resetButton:hover, #toggleMusic:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.4);
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+}
+
+#shuffleButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 #validators {
@@ -99,7 +121,9 @@ body {
 }
 
 .tile:hover {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transform: scale(1.05);
+    transition: all 0.2s ease;
 }
 
 /* Moveable piece styling */
@@ -258,4 +282,32 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+#volumeSlider {
+    width: 100px;
+    height: 5px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #d3d3d3;
+    outline: none;
+    border-radius: 3px;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #2c3e50;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#volumeSlider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: #2c3e50;
+    border-radius: 50%;
+    cursor: pointer;
 }

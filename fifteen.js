@@ -16,6 +16,7 @@ class fifteenPuzzle { //class for the fifteen puzzle game
         this.bestTime = localStorage.getItem('bestTime') || null;
         this.bestMoves = localStorage.getItem('bestMoves') || null;
         this.isMusicPlaying = false;
+        this.defaultVolume = 0.3; // 30% volume by default
 
         //bind event handlers where bind is used to ensure that the methods have the correct context when they are called
         this.handleTileClick = this.handleTileClick.bind(this); //bind the handleTileClick method to the this object so it can be used in the event listener
@@ -48,8 +49,16 @@ class fifteenPuzzle { //class for the fifteen puzzle game
         //DOM elements to control the music
         this.music = document.getElementById('backgroundMusic');
         this.toggleMusicButton = document.getElementById('toggleMusic');
+        this.volumeSlider = document.getElementById('volumeSlider');
+        
+        // Set initial volume
+        this.music.volume = this.defaultVolume;
+        
+        // Add event listeners for audio controls
         this.toggleMusicButton.addEventListener('click', () => this.toggleMusic());
-
+        this.volumeSlider.addEventListener('input', () => {
+            this.music.volume = this.volumeSlider.value / 100;
+        });
 
 
         this.updateBestScores(); //update the best scores
