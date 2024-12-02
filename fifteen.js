@@ -1,8 +1,8 @@
 "use strict";
 
-class fifteenPuzzle { //class for the fifteen puzzle game 
-    constructor() { //constructor for the fifteen puzzle game class which is called when an instance of the class is created 
-        //this constructor is used to initialize the properties of the 
+class fifteenPuzzle { //class for the fifteen puzzle game
+    constructor() { //constructor for the fifteen puzzle game class which is called when an instance of the class is created
+        //this constructor is used to initialize the properties of the
 
         //properties represent the size of the board, the number of tiles, and the position of the empty space
         this.BOARD_SIZE = 4;
@@ -104,7 +104,7 @@ class fifteenPuzzle { //class for the fifteen puzzle game
                 const tile = document.createElement('div'); //create a new div element for the tile
                 const number = row * this.BOARD_SIZE + col + 1; //calculate the number to display on the tile
 
-                //set tile properties 
+                //set tile properties
                 tile.className = 'tile'; //set the class name for the tile which would be used for styling
                 tile.id = `square_${row}_${col}`; //set the ID for the tile which would be used for identification
                 tile.textContent = number; //set the text content for the tile which would be the number
@@ -118,7 +118,7 @@ class fifteenPuzzle { //class for the fifteen puzzle game
 
                 //set background position
                 //negative values b/c we're moving the background "behind" the window
-                tile.style.backgroundPosition = `${-col * 100}px ${-row * 100}px`; //set the background position of the tile which is the negative of the column number times 100 pixels and the negative of the row number times 100 pixels because we're moving the background "behind" the window    
+                tile.style.backgroundPosition = `${-col * 100}px ${-row * 100}px`; //set the background position of the tile which is the negative of the column number times 100 pixels and the negative of the row number times 100 pixels because we're moving the background "behind" the window
 
                 //event listeners
                 tile.addEventListener('click', this.handleTileClick); //event listener for when tile is clicked
@@ -134,7 +134,7 @@ class fifteenPuzzle { //class for the fifteen puzzle game
 
     //helper method to update background position when tiles move
     updateTileBackground(tile, row, col) {
-        tile.style.backgroundPosition = `${-col * 100}px ${-row * 100}px`; //set the background position of the tile which is the negative of the column number times 100 pixels and the negative of the row number times 100 pixels because we're moving the background "behind" the window    
+        tile.style.backgroundPosition = `${-col * 100}px ${-row * 100}px`; //set the background position of the tile which is the negative of the column number times 100 pixels and the negative of the row number times 100 pixels because we're moving the background "behind" the window
     }
 
     //event handler for when a tile is clicked
