@@ -325,7 +325,7 @@ body {
     background-color: #f7f7f7;
     color: #34495e;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.9s ease;
 }
 
 #bgDropdown:hover {
