@@ -1,4 +1,4 @@
-"use strict";
+"use strict"; //strict mode to prevent errors and improve security
 
 class fifteenPuzzle { //class for the fifteen puzzle game
     constructor() { //constructor for the fifteen puzzle game class which is called when an instance of the class is created
