@@ -12,9 +12,23 @@
     <!-- Main puzzle container -->
     <div id="puzzleContainer">
         <div id="gameBoard"></div>
+        <!-- Stats container -->
+        <div id="gameStats">
+            <div>Moves: <span id="moveCounter">0</span></div>
+            <div>Time: <span id="timer">0:00</span></div>
+            <div>Best Time: <span id="bestTime">-</span></div>
+            <div>Best Moves: <span id="bestMoves">-</span></div>
+        </div>
+        <!-- audio controls -->
+        <div id="audioControls">
+            <audio id="backgroundMusic" loop>
+                <source src="audio/game-music.mp3" type="audio/mp3">
+            </audio>
+            <button id="toggleMusic">🔊</button>
+        </div>
+        <button id="shuffleButton">Shuffle</button>
+        <button id="resetButton" onclick="game.resetGame()">Correct Order</button>
     </div>
-    <button id="shuffleButton">Shuffle</button>
-    <button id="resetButton" onclick="game.resetGame()">Correct Order</button>
     <!-- Validator links -->
     <p id="validators">
         <a href="https://validator.w3.org/check/referer">
