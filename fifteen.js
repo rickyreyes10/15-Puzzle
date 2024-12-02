@@ -179,7 +179,48 @@ class fifteenPuzzle { //class for the fifteen puzzle game
         }
     }
 
+    //helper method to check if the game is won
+    checkWin() { //this method is used to check if the game is won by checking if the tiles are in the correct order by comparing the text content of the tiles to the expected numbers
+        for (let row = 0; row < this.BOARD_SIZE; row++) { //loop through the rows of the board      
+            for (let col = 0; col < this.BOARD_SIZE; col++) { //loop through the columns of the board
+                if (row === this.BOARD_SIZE - 1 && col === this.BOARD_SIZE - 1) { //if the current tile is the bottom-right tile (empty space), skip it
+                    continue; // Skip empty space
+                }
+                const tile = this.getTile(row, col); //get the tile DOM element at the current row and column
+                const expectedNumber = row * this.BOARD_SIZE + col + 1; //calculate the expected number for the tile at the current row and column
+                if (!tile || parseInt(tile.textContent) !== expectedNumber) { //if the tile doesn't exist or the tile's text content is not equal to the expected number, return false
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
+    //helper method to handle the win
+    handleWin() { //this method is used to handle the win by stopping the timer, calculating the final time, updating the best scores, and showing the win message
+        // Stop timer
+        clearInterval(this.timerInterval);
+
+        // Calculate final time
+        const finalTime = Math.floor((Date.now() - this.startTime) / 1000); //calculate the final time by subtracting the start time from the current time and dividing by 1000 to get seconds
+
+        // Update best scores
+        if (!this.bestTime || finalTime < parseInt(this.bestTime)) { //if the best time doesn't exist or the final time is less than the best time, update the best time and store it in local storage
+            this.bestTime = finalTime;
+            localStorage.setItem('bestTime', finalTime);
+        }
+        if (!this.bestMoves || this.moveCount < parseInt(this.bestMoves)) { //if the best moves doesn't exist or the move count is less than the best moves, update the best moves and store it in local storage
+            this.bestMoves = this.moveCount;
+            localStorage.setItem('bestMoves', this.moveCount);
+        }
+
+        this.updateBestScores(); //update the best scores
+
+        // Show win message
+        setTimeout(() => {
+            alert(`Congratulations! You solved the puzzle in ${this.moveCount} moves and ${finalTime} seconds!`);
+        }, 300);
+    }
 
     updateBestScores() { //this method is used to update the best scores by displaying the best time and best moves
         this.bestTimeDisplay.textContent = this.bestTime ? //if the best time exists, display it in the format of minutes and seconds, otherwise display '-'
@@ -242,7 +283,6 @@ class fifteenPuzzle { //class for the fifteen puzzle game
     getTile(row, col) {
         return document.getElementById(`square_${row}_${col}`); //get the tile DOM element at the specific row and column
     }
-
 
 
 
