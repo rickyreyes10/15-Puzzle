@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #e7ece7;
+}
+
+#puzzleContainer {
+    width: 400px;
+    margin: 20px auto;
+}
+
+#gameBoard {
+    width: 400px;
+    height: 400px;
+    position: relative;
+    border: 2px solid black;
+}
+
+#validators {
+    text-align: right;
+}
+
+#validators img {
+    border: none;
+    width: 88px;
+    height: 31px;
+}
+
+/* Tile styling */
+.tile {
+    /* Size */
+    width: 96px;
+    /* 100px - 2px border on each side */
+    height: 96px;
+    /* 100px - 2px border on each side */
+
+    /* Border */
+    border: 2px solid black;
+
+    /* Text styling */
+    font-family: sans-serif;
+    font-size: 32pt;
+    text-align: center;
+    line-height: 96px;
+    /* Centers text vertically */
+
+    /* Positioning */
+    position: absolute;
+    cursor: pointer;
+
+    /*smooth transitions for animations */
+    transition: all 0.3s ease;
+
+    /*background properties */
+    background-image: url('images/img4.png');
+    /* Full puzzle size */
+    background-size: 400px 400px;
+    overflow: hidden;
+
+    /*text shadow to make numbers more readable */
+    text-shadow: 2px 2px 2px rgba(188, 185, 185, 0.8);
+
+    /*initial state for animation */
+    opacity: 0;
+
+    /* Animation properties */
+    animation: tileAppear 0.5s ease forwards;
+    /* Delay animation based on tile number */
+    animation-delay: calc(var(--tile-index) * 0.1s);
+    /* 0.1s delay for each tile .. calc() is used to calculate the delay based on the tile index .. var*/
+
+}
